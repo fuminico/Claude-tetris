@@ -1,16 +1,41 @@
-# React + Vite
+# 🎮 Switch風テトリスゲーム
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Vite + React + Tailwind CSS で作成された、Nintendo Switch風のUIを持つテトリスゲームです。
 
-Currently, two official plugins are available:
+## ✨ 主な機能
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-   レスポンシブデザインで、様々な画面サイズに対応
+-   キーボードによる直感的な操作
+-   「次のブロック」のプレビュー機能
+-   スコア計算機能
 
-## React Compiler
+## 🚀 セットアップと起動方法
 
-The React Compiler is not enabled on this template. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1.  **リポジトリをクローンします**
+    ```bash
+    git clone <repository-url>
+    cd claude-tetris
+    ```
 
-## Expanding the ESLint configuration
+2.  **依存関係をインストールします**
+    ```bash
+    npm install
+    ```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+3.  **開発サーバーを起動します**
+    ```bash
+    npm run dev
+    ```
+    ブラウザで `http://localhost:5173` などのURLにアクセスすると、ゲームが起動します。
+
+## 🕹️ 操作方法
+
+| キー          | アクション |
+| :------------ | :--------- |
+| `←` `→`      | ブロックの左右移動 |
+| `↑`           | ブロックの回転   |
+| `↓`           | ブロックの高速落下 |
+| `スペースキー` | 一時停止 / 再開  |
+
+---
+このプロジェクトはAI（Gemini）とのペアプログラミングによって作成されました。

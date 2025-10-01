@@ -1,9 +1,10 @@
 # 🎮 Switch風テトリスゲーム
 
-Vite + React + Tailwind CSS で作成された、Nintendo Switch風のUIを持つレスポンシブ対応のテトリスゲームです。
+[![デプロイメントステータス](https://github.com/fuminico/Claude-tetris/actions/workflows/deploy.yml/badge.svg)](https://github.com/fuminico/Claude-tetris/actions/workflows/deploy.yml)
 
-![ゲーム画面のスクリーンショット](./screenshot.png)
-*(注: 上記は表示例です。実際のスクリーンショットを配置してください。)*
+**[➡️ ライブデモはこちら](https://fuminico.github.io/Claude-tetris/)**
+
+Vite + React + Tailwind CSS で作成された、Nintendo Switch風のUIを持つレスポンシブ対応のテトリスゲームです。
 
 ## ✨ 主な特徴
 
@@ -14,22 +15,23 @@ Vite + React + Tailwind CSS で作成された、Nintendo Switch風のUIを持�
 
 ## 🛠️ 技術スタック
 
-このプロジェクトは以下の技術を使用して構築されています。
+このプロジェクトは以下の主要な技術を使用して構築されています。
 
 -   **[Vite](https://vitejs.dev/)**: 高速なフロントエンド開発ツール。
 -   **[React](https://react.dev/)**: UI構築のためのJavaScriptライブラリ。
 -   **[Tailwind CSS](https://tailwindcss.com/)**: ユーティリティファーストのCSSフレームワーク。
+-   **[vite-plugin-csp](https://github.com/Lilas-w/vite-plugin-csp)**: GitHub Pagesのコンテンツセキュリティポリシー（CSP）に対応するためのViteプラグイン。
 
 ## 🚀 プロジェクトのセットアップ
 
 1.  **リポジトリをクローンします。**
     ```bash
-    git clone <repository-url>
+    git clone https://github.com/fuminico/Claude-tetris.git
     ```
 
 2.  **プロジェクトディレクトリに移動します。**
     ```bash
-    cd claude-tetris
+    cd Claude-tetris
     ```
 
 3.  **依存関係をインストールします。**
@@ -37,31 +39,17 @@ Vite + React + Tailwind CSS で作成された、Nintendo Switch風のUIを持�
     npm install
     ```
 
-## 📜 利用可能なスクリプト
-
-プロジェクトルートで、以下のスクリプトを実行できます。
-
--   `npm run dev`
-    開発モードでアプリを起動します。
-    ブラウザで [http://localhost:5173](http://localhost:5173) などを開いて確認してください。
-
--   `npm run build`
-    本番用にアプリをビルドし、`dist` ディレクトリに静的ファイルを生成します。
-
--   `npm run preview`
-    `dist` ディレクトリに生成された本番用ビルドをローカルで起動し、プレビューします。
-
-## 🌐 デプロイ方法
-
-このプロジェクトは静的なWebサイトとして簡単にデプロイできます。
-
-1.  **プロジェクトをビルドします。**
+4.  **開発サーバーを起動します。**
     ```bash
-    npm run build
+    npm run dev
     ```
 
-2.  **`dist` ディレクトリをデプロイします。**
-    ビルドが完了すると、プロジェクトのルートに `dist` ディレクトリが作成されます。このディレクトリの中身を、**Vercel**, **Netlify**, **GitHub Pages** などの静的サイトホスティングサービスにアップロードすることで、Web上に公開（デプロイ）できます。
+## 🌐 デプロイ
+
+このリポジトリは、`main` ブランチへのプッシュをトリガーとして、GitHub Actions経由でGitHub Pagesに自動的にデプロイされます。
+
+-   **ビルド**: `npm run build`
+-   **デプロイ**: `.github/workflows/deploy.yml` にて定義
 
 ## 🕹️ 操作方法
 
@@ -72,6 +60,5 @@ Vite + React + Tailwind CSS で作成された、Nintendo Switch風のUIを持�
 | `↓`           | ブロックの高速落下 |
 | `スペースキー` | 一時停止 / 再開    |
 
-## 📄 ライセンス
-
-このプロジェクトは [MIT License](LICENSE) の下で公開されています。
+---
+このプロジェクトはAI（Gemini）とのペアプログラミングによって作成されました。

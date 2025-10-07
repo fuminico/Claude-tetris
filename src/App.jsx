@@ -25,7 +25,8 @@ export default function App() {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
-  const [nextPiece, setNextPiece] = useState(() => newPiece());
+  const [nextPiece, setNextPiece] = useState(null);
+  const [hasStarted, setHasStarted] = useState(false);
 
   const collide = useCallback((b, p, px, py) => {
     for (let y = 0; y < p.shape.length; y++) {
@@ -77,7 +78,7 @@ export default function App() {
   }, []);
 
   const drop = useCallback(() => {
-    if (!piece || gameOver || isPaused) return;
+    if (!hasStarted || !piece || !nextPiece || gameOver || isPaused) return;
     
     if (!collide(board, piece, pos.x, pos.y + 1)) {
       setPos(p => ({ ...p, y: p.y + 1 }));
@@ -96,24 +97,27 @@ export default function App() {
         setNextPiece(newPiece());
       }
     }
-  }, [piece, pos, board, gameOver, isPaused, collide, merge, clearLines, newPiece]);
+  }, [piece, pos, board, gameOver, isPaused, collide, merge, clearLines, newPiece, nextPiece, hasStarted]);
 
   useEffect(() => {
-    if (!piece) {
-      const next = newPiece();
-      setPiece(next);
-      setPos({ x: Math.floor(COLS / 2) - 1, y: 0 });
-    }
-  }, [piece, newPiece]);
+    if (!hasStarted || piece) return;
+    
+    const next = newPiece();
+    setPiece(next);
+    setPos({ x: Math.floor(COLS / 2) - 1, y: 0 });
+    setNextPiece(newPiece());
+  }, [piece, newPiece, hasStarted]);
 
   useEffect(() => {
+    if (!hasStarted || gameOver || isPaused) return;
+    
     const timer = setInterval(drop, 500);
     return () => clearInterval(timer);
-  }, [drop]);
+  }, [drop, hasStarted, gameOver, isPaused]);
 
   useEffect(() => {
     const handleKey = (e) => {
-      if (gameOver || !piece) return;
+      if (!hasStarted || gameOver || !piece) return;
       
       if (e.key === ' ') {
         e.preventDefault();
@@ -138,7 +142,7 @@ export default function App() {
     };
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
-  }, [piece, pos, board, gameOver, isPaused, collide, rotate, drop]);
+  }, [piece, pos, board, gameOver, isPaused, collide, rotate, drop, hasStarted]);
 
   const displayBoard = board.map(row => [...row]);
   if (piece && !gameOver && !isPaused) {
@@ -151,14 +155,16 @@ export default function App() {
     }
   }
 
-  const reset = () => {
+  const startGame = useCallback(() => {
     setBoard(Array(ROWS).fill(null).map(() => Array(COLS).fill(0)));
     setPiece(null);
+    setPos({ x: Math.floor(COLS / 2) - 1, y: 0 });
     setScore(0);
     setGameOver(false);
     setIsPaused(false);
-    setNextPiece(newPiece());
-  };
+    setNextPiece(null);
+    setHasStarted(true);
+  }, []);
 
   return (
     <div className="h-screen w-screen bg-gradient-to-b from-gray-700 to-gray-900 flex items-center justify-center p-2">
@@ -244,18 +250,26 @@ export default function App() {
                   </div>
 
                   <div className="pt-2 flex items-center justify-center" style={{ minHeight: '3.5rem' }}>
-                    {gameOver && (
+                    {!hasStarted && (
+                      <button
+                        onClick={startGame}
+                        className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-full font-bold text-[clamp(0.7rem,3vh,1.1rem)] transition-colors"
+                      >
+                        START
+                      </button>
+                    )}
+                    {hasStarted && gameOver && (
                       <div className="text-center">
                         <div className="text-red-400 text-[clamp(0.8rem,3vh,1.2rem)] font-bold mb-1">GAME OVER</div>
                         <button
-                          onClick={reset}
+                          onClick={startGame}
                           className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full font-bold text-[clamp(0.6rem,2.5vh,1rem)]"
                         >
                           RESTART
                         </button>
                       </div>
                     )}
-                    {isPaused && !gameOver && (
+                    {hasStarted && isPaused && !gameOver && (
                       <div className="text-center">
                         <div className="text-yellow-400 text-[clamp(0.8rem,3vh,1.2rem)] font-bold">PAUSED</div>
                       </div>
@@ -275,23 +289,29 @@ export default function App() {
                   <div>
                     <h3 className="text-white text-[clamp(0.5rem,2.2vh,1rem)] font-bold mb-2 text-center">次のブロック</h3>
                     <div className="bg-gray-800 rounded-lg p-2 flex items-center justify-center aspect-square">
-                      <div className="inline-grid" style={{ 
-                        gap: '2px',
-                        gridTemplateColumns: `repeat(${nextPiece.shape[0].length}, auto)`,
-                      }}>
-                        {nextPiece.shape.map((row, y) => 
-                          row.map((cell, x) => (
-                            <div
-                              key={`${y}-${x}`}
-                              className="w-3 h-3"
-                              style={{
-                                backgroundColor: cell ? COLORS[nextPiece.color - 1] : 'transparent',
-                                boxShadow: cell ? 'inset -1px -1px 2px rgba(0,0,0,0.3)' : 'none'
-                              }}
-                            />
-                          ))
-                        )}
-                      </div>
+                      {nextPiece ? (
+                        <div className="inline-grid" style={{ 
+                          gap: '2px',
+                          gridTemplateColumns: `repeat(${nextPiece.shape[0].length}, auto)`,
+                        }}>
+                          {nextPiece.shape.map((row, y) => 
+                            row.map((cell, x) => (
+                              <div
+                                key={`${y}-${x}`}
+                                className="w-3 h-3"
+                                style={{
+                                  backgroundColor: cell ? COLORS[nextPiece.color - 1] : 'transparent',
+                                  boxShadow: cell ? 'inset -1px -1px 2px rgba(0,0,0,0.3)' : 'none'
+                                }}
+                              />
+                            ))
+                          )}
+                        </div>
+                      ) : (
+                        <div className="text-gray-500 text-[clamp(0.5rem,2vh,0.9rem)] text-center leading-relaxed">
+                          STARTを押すと表示されます
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>

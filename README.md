@@ -4,61 +4,70 @@
 
 **[➡️ ライブデモはこちら](https://fuminico.github.io/Claude-tetris/)**
 
-Vite + React + Tailwind CSS で作成された、Nintendo Switch風のUIを持つレスポンシブ対応のテトリスゲームです。
+Vite + React + Tailwind CSS で作成された、Nintendo Switch をモチーフにした UI を持つレスポンシブ対応テトリスゲームです。
 
 ## ✨ 主な特徴
 
--   **Switch風UI**: Nintendo Switchを模したユニークで魅力的なデザイン。
--   **レスポンシブ対応**: 画面サイズに応じてレイアウトが自動調整され、様々なデバイスで快適にプレイ可能。
--   **主要なテトリス機能**: スコア計算、次のブロックのプレビュー、一時停止機能を搭載。
--   **モダンな技術スタック**: Viteによる高速な開発環境と、React, Tailwind CSSによる効率的な開発を実現。
+- **Switch 風 UI**: ジョイコンを含む Switch 本体をイメージした没入感のあるデザイン。
+- **レスポンシブ対応**: PC / タブレット / スマートフォンで快適にプレイ可能。
+- **テトリスの基本機能**: スコア計算、次ブロックのプレビュー、一時停止（スペースキー）に対応。
+- **スタートボタンを実装**: 画面中央の START ボタンからゲーム開始。ゲームオーバー時は RESTART ボタンで素早く再挑戦可能。
+- **モダンな技術スタック**: Vite による高速開発、React + Tailwind CSS による効率的な UI 実装。
 
-## 🛠️ 技術スタック
+## 🕹 操作方法
 
-このプロジェクトは以下の主要な技術を使用して構築されています。
+| 操作            | キー                   |
+| --------------- | ---------------------- |
+| 左右移動        | ← / →                  |
+| 落下（ソフトドロップ） | ↓                     |
+| 回転            | ↑                      |
+| ポーズ切り替え  | Space                  |
+| ゲーム開始・再開 | 画面下部の START / RESTART ボタン |
 
--   **[Vite](https://vitejs.dev/)**: 高速なフロントエンド開発ツール。
--   **[React](https://react.dev/)**: UI構築のためのJavaScriptライブラリ。
--   **[Tailwind CSS](https://tailwindcss.com/)**: ユーティリティファーストのCSSフレームワーク。
--   **[vite-plugin-csp](https://github.com/Lilas-w/vite-plugin-csp)**: GitHub Pagesのコンテンツセキュリティポリシー（CSP）に対応するためのViteプラグイン。
+## 🛠 技術スタック
 
-## 🚀 プロジェクトのセットアップ
+- **[Vite](https://vitejs.dev/)**: 高速なフロントエンド開発環境
+- **[React](https://react.dev/)**: UI 構築のための JavaScript ライブラリ
+- **[Tailwind CSS](https://tailwindcss.com/)**: ユーティリティファーストの CSS フレームワーク
+- **[vite-plugin-csp](https://github.com/Lilas-w/vite-plugin-csp)**: GitHub Pages の CSP 対応プラグイン
 
-1.  **リポジトリをクローンします。**
+## 🚀 セットアップ
+
+1. リポジトリをクローンします。
+
     ```bash
     git clone https://github.com/fuminico/Claude-tetris.git
     ```
 
-2.  **プロジェクトディレクトリに移動します。**
+2. プロジェクトディレクトリに移動します。
+
     ```bash
     cd Claude-tetris
     ```
 
-3.  **依存関係をインストールします。**
+3. 依存関係をインストールします。
+
     ```bash
     npm install
     ```
 
-4.  **開発サーバーを起動します。**
+4. 開発サーバーを起動します。
+
     ```bash
     npm run dev
     ```
 
 ## 🌐 デプロイ
 
-このリポジトリは、`main` ブランチへのプッシュをトリガーとして、GitHub Actions経由でGitHub Pagesに自動的にデプロイされます。
+`main` ブランチへのプッシュをトリガーに GitHub Actions が動作し、自動的に GitHub Pages へデプロイされます。
 
--   **ビルド**: `npm run build`
--   **デプロイ**: `.github/workflows/deploy.yml` にて定義
+- ビルド: `npm run build`
+- プレビュー: `npm run preview`
 
-## 🕹️ 操作方法
+## 🧪 テスト
 
-| キー          | アクション         |
-| :------------ | :----------------- |
-| `←` `→`      | ブロックの左右移動 |
-| `↑`           | ブロックの回転     |
-| `↓`           | ブロックの高速落下 |
-| `スペースキー` | 一時停止 / 再開    |
+現状ユニットテストは未実装です。挙動の確認には開発サーバーを起動しブラウザで動作確認を行ってください。
 
----
-このプロジェクトはAI（Gemini）とのペアプログラミングによって作成されました。
+## 📄 ライセンス
+
+このリポジトリは [MIT License](LICENSE) の下で公開されています。

@@ -2,11 +2,12 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import vitePluginCsp from 'vite-plugin-csp'
 
-// https://vite.dev/config/
+const isVercel = !!process.env.VERCEL
+
 export default defineConfig({
   plugins: [
     react(),
     vitePluginCsp(),
   ],
-  base: '/Claude-tetris/',
+  base: isVercel ? '/' : '/Claude-tetris/',
 })
